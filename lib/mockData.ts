@@ -42,62 +42,72 @@ export interface BusinessIdea {
 }
 
 const INDIE_PROTOCOL: ValidationTask[] = [
-    // PHASE 1: DEMAND (40 pts) - The most important for Indie Hackers
+    // PHASE 1: DEMAND & DISTRIBUTION (40 pts)
     {
         id: "t1",
-        phase: "1. Demande & SEO",
-        name: "Volume de Recherche (SEO)",
-        description: "Recherche Google Keyword Planner & Trends.",
+        phase: "1. Demand & Distribution",
+        name: "Search Volume (SEO)",
+        description: "Is people searching for this solution? (Keyword Planner)",
         status: "todo",
-        points: 20,
+        points: 15,
         estimatedDuration: "2 min",
-        result: { label: "Volume Mensuel", value: "..." }
+        result: { label: "Monthly Vol", value: "..." }
     },
     {
         id: "t2",
-        phase: "1. Demande & SEO",
-        name: "Communautés (Reddit/Fb)",
-        description: "Scan des discussions et plaintes récentes.",
+        phase: "1. Demand & Distribution",
+        name: "Community Pulse",
+        description: "Are there active subreddits/FB groups complaining about this?",
         status: "todo",
-        points: 20,
+        points: 15,
         estimatedDuration: "3 min",
-        result: { label: "Discussions actives", value: "..." }
+        result: { label: "Active Threads", value: "..." }
     },
-
-    // PHASE 2: COMPETITION GAP (20 pts)
     {
         id: "t3",
-        phase: "2. Concurrence",
-        name: "Analyse des gaps",
-        description: "Les concurrents sont-ils trop gros/lents/chers ?",
+        phase: "1. Demand & Distribution",
+        name: "Viral Potential",
+        description: "Can this grow organically on TikTok/Twitter? (Shareable?)",
+        status: "todo",
+        points: 10,
+        estimatedDuration: "Instant",
+        result: { label: "K-Factor Pot.", value: "..." }
+    },
+
+    // PHASE 2: COMPETITION (Use the 'Bloat' factor)
+    {
+        id: "t4",
+        phase: "2. Competition Check",
+        name: "Competitor Bloat",
+        description: "Are competitors too complex/expensive? (The 'Indie Advantage')",
         status: "todo",
         points: 20,
         estimatedDuration: "5 min",
-        result: { label: "Concurrents directs", value: "..." }
+        result: { label: "Bloat Score", value: "..." }
     },
 
-    // PHASE 3: EXECUTION (20 pts)
-    {
-        id: "t4",
-        phase: "3. Faisabilité No-Code",
-        name: "Audit Tech Stack",
-        description: "Peut-on le faire avec Bubble/NextJS en < 2 semaines ?",
-        status: "todo",
-        points: 20,
-        estimatedDuration: "Instant",
-        result: { label: "Complexité", value: "..." }
-    },
-
-    // PHASE 4: MONEY (20 pts)
+    // PHASE 3: EXECUTION SPEED
     {
         id: "t5",
-        phase: "4. Monétisation",
-        name: "Check Pricing Power",
-        description: "Les gens paient-ils déjà pour résoudre ça ?",
+        phase: "3. Build Speed",
+        name: "No-Code Stack Check",
+        description: "Can it be built in <2 weeks with Bubble/Make/NextJS?",
         status: "todo",
         points: 20,
         estimatedDuration: "Instant",
-        result: { label: "Prix Cible", value: "..." }
+        result: { label: "Dev Time", value: "..." }
+    },
+
+    // PHASE 4: PASSIVE INCOME POTENTIAL
+    {
+        id: "t6",
+        phase: "4. Maintenance",
+        name: "Passive Score",
+        description: "Once built, does it run itself? (Low Support/Ops)",
+        status: "todo",
+        points: 20,
+        estimatedDuration: "Instant",
+        result: { label: "Hours/Week", value: "..." }
     }
 ];
 
@@ -122,15 +132,16 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         scores: { demand_market: 9, competitor_gap: 7, nocode_feasibility: 10, monetization_speed: 9 },
         metrics: { monthly_searches: "12k/mo", competitor_count: "High", dev_time_est: "3 jours", price_point: "49€" },
         tags: ["Digital Product", "No-Code", "B2B"],
-        tasks: INDIE_PROTOCOL.map(t => ({
-            ...t,
-            status: 'done',
-            result: t.id === 't1' ? { label: "Volume Mensuel", value: "12,500", highlight: true } :
-                t.id === 't2' ? { label: "Subs Actifs", value: "5 (r/freelance...)", highlight: true } :
-                    t.id === 't3' ? { label: "Concurrents", value: "Saturé mais cher" } :
-                        t.id === 't4' ? { label: "Complexité", value: "Faible (Notion)" } :
-                            { label: "Prix Moyen", value: "45-90€" }
-        }))
+        tasks: INDIE_PROTOCOL.map(t => {
+            const result =
+                t.id === 't1' ? { label: "Volume Mensuel", value: "12,500", highlight: true } :
+                    t.id === 't2' ? { label: "Subs Actifs", value: "5 (r/freelance...)", highlight: true } :
+                        t.id === 't3' ? { label: "Viralité", value: "Moyenne (SEO led)" } :
+                            t.id === 't4' ? { label: "Bloat Score", value: "High (Logiciels chers)" } :
+                                t.id === 't5' ? { label: "Dev Time", value: "3 jours" } :
+                                    { label: "Passive", value: "100% (Digital DL)" };
+            return { ...t, status: 'done', result };
+        })
     },
     {
         id: "3",

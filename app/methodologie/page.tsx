@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ChevronDown, CheckCircle, Target, TrendingUp, Shield, Users } from "lucide-react";
+import { ArrowLeft, ChevronDown, CheckCircle, Target, Zap, Shield, Rocket } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,50 +15,50 @@ export default function MethodologyPage() {
     const phases = [
         {
             id: "phase1",
-            title: "Phase 1 : Market Fit & Volumétrie",
+            title: "Phase 1 : Demande & Distribution",
             icon: <Target className="text-brand-mint" />,
-            description: "Validation de l'existence d'une demande active et solvable.",
+            description: "Est-ce que les gens cherchent déjà une solution ?",
             details: [
-                "Analyse SEO : Recherche de volume mensuel sur mots-clés transactionnels.",
-                "Qualification du besoin : Identification des 'Pain Points' critiques via analyse sémantique.",
-                "Taille du Marché (TAM) : Estimation du marché adressable total et segmentation.",
-                "Critère de Score : +30 points si >10k recherches/mois et problème qualifié."
+                "Volume SEO : Y a-t-il au moins 1000 recherches/mois surv Google ?",
+                "Communautés : Scan de Reddit/Facebook pour trouver des plaintes récurrentes.",
+                "Viralité : Potentiel de croissance organique (TikTok/Twitter) sans ads payantes.",
+                "Critère : +30 points si audience active identifiée."
             ]
         },
         {
             id: "phase2",
-            title: "Phase 2 : Intelligence Concurrentielle",
+            title: "Phase 2 : Analyse 'Bloat' (Concurrence)",
             icon: <Shield className="text-brand-purple" />,
-            description: "Cartographie des acteurs en place et identification de l'Océan Bleu.",
+            description: "Les concurrents sont-ils trop complexes ou chers ?",
             details: [
-                "Benchmark Outils : Comparaison fonctionnelle des 5 leaders du marché.",
-                "Analyse Pricing : Positionnement prix par rapport à la moyenne du secteur.",
-                "Facteur Différenciant : Validation d'un avantage injuste (Unfair Advantage).",
-                "Critère de Score : +20 points si offre unique identifiée."
+                "Bloat Score : Les concurrents actuels sont-ils des 'usines à gaz' ?",
+                "Indie Advantage : Peut-on faire plus simple, moins cher et plus rapide ?",
+                "Niche : Est-ce un segment ignoré par les gros acteurs ?",
+                "Critère : +20 points si opportunité de simplification (Unbundling)."
             ]
         },
         {
             id: "phase3",
-            title: "Phase 3 : Viabilité Financière (Unit Economics)",
-            icon: <TrendingUp className="text-brand-coral" />,
-            description: "Projection de la rentabilité opérationnelle à 3 ans.",
+            title: "Phase 3 : Faisabilité No-Code",
+            icon: <Zap className="text-brand-blue" />,
+            description: "Peut-on livrer un MVP en moins de 2 semaines ?",
             details: [
-                "CAC vs LTV : Ratio Coût d'Acquisition / Valeur Vie Client (Cible > 3).",
-                "Marge Brute : Analyse de la structure de coûts par unité vendue.",
-                "Break-even Point : Calcul du délai de retour sur investissement (ROI).",
-                "Critère de Score : +30 points si marge nette > 20% à l'année 2."
+                "Tech Stack : Faisable avec Bubble, Make ou Next.js starter ?",
+                "Complexité : Éviter l'IA lourde ou le Hardware au début.",
+                "Time-to-Market : L'objectif est de tester l'idée ce week-end.",
+                "Critère : +30 points si dev estimé < 5 jours."
             ]
         },
         {
             id: "phase4",
-            title: "Phase 4 : Fit Studio Descartes",
-            icon: <Users className="text-brand-blue" />,
-            description: "Cohérence avec la thèse d'investissement et les ressources du Studio.",
+            title: "Phase 4 : Revenus Passifs & Maintenance",
+            icon: <Rocket className="text-brand-coral" />,
+            description: "Est-ce un business qui tourne tout seul ?",
             details: [
-                "Alignement Mission : Contribution à la démocratisation du savoir.",
-                "Ressources Internes : Capacité à délivrer avec l'équipe actuelle.",
-                "Synergies : Potentiel de cross-sell avec les autres ventures du Studio.",
-                "Critère de Score : +20 points si synergie identifiée."
+                "Maintenance : Faible besoin de support client ou d'ops manuelles.",
+                "Marges : Coûts serveurs/API faibles.",
+                "Scalabilité : Le CA peut-il augmenter sans augmenter la charge de travail ?",
+                "Critère : +20 points si haut potentiel passif."
             ]
         }
     ];
@@ -75,11 +75,10 @@ export default function MethodologyPage() {
             {/* Header */}
             <div className="mb-16">
                 <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
-                    Méthodologie de Scoring <span className="text-brand-mint">.</span>
+                    Méthodologie "Indie" <span className="text-brand-mint">.</span>
                 </h1>
                 <p className="text-xl text-white/70 leading-relaxed font-light">
-                    Notre algorithme d'évaluation repose sur le protocole <strong className="text-white">"Deep Business Validation"</strong>.
-                    Il croise des données de marché temps réel avec des modèles financiers éprouvés pour dérisquer chaque opportunité avant investissement.
+                    Oubliez les Business Plans de 50 pages. Notre protocole <strong className="text-white">"Flash Validation"</strong> est conçu pour identifier les micro-business rentables, rapides à lancer et peu coûteux.
                 </p>
             </div>
 
@@ -130,9 +129,9 @@ export default function MethodologyPage() {
 
             {/* Trust Footer */}
             <div className="mt-16 text-center p-8 bg-white/5 rounded-2xl border border-white/5">
-                <p className="text-white/40 text-sm mb-2">Sources & Standards</p>
+                <p className="text-white/40 text-sm mb-2">Inspiration</p>
                 <p className="text-white/60 font-medium">
-                    Basé sur les méthodologies <span className="text-white">Lean Startup</span>, <span className="text-white">Blue Ocean Strategy</span> et les critères <span className="text-white">Series A VC</span>.
+                    Basé sur les standards <span className="text-white">Indie Hackers</span>, <span className="text-white">Micro-SaaS HQ</span> et l'approche <span className="text-white">"Build in Public"</span>.
                 </p>
             </div>
 
