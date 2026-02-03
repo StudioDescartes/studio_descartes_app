@@ -72,7 +72,7 @@ export default function IdeaDetail() {
             }
         }
 
-        setIdea(prev => prev ? ({
+        setIdea((prev: typeof MOCK_IDEAS[0] | undefined) => prev ? ({
             ...prev,
             status: "scored",
             tasks: completedTasks,

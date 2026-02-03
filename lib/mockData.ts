@@ -3,10 +3,19 @@ import { BusinessIdea, ValidationTask } from "./types"; // Assuming types are ex
 export type AnalysisStatus = "pending" | "analyzing" | "scored" | "validated";
 export type TaskStatus = "todo" | "in_progress" | "done";
 
+export interface TaskSource {
+    id: string;
+    title: string;
+    url?: string;
+    type: "web" | "pdf" | "calculation";
+}
+
 export interface TaskResult {
     label: string;
     value: string | number;
     highlight?: boolean;
+    sources?: TaskSource[];
+    reasoning?: string;
 }
 
 export interface ValidationTask {
