@@ -51,12 +51,12 @@ export default function IdeaCard({ idea, index }: IdeaCardProps) {
 
                 <div className="relative z-10 grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
                     <div>
-                        <div className="text-xs text-white/40 mb-1">TAM Estimation</div>
-                        <div className="text-sm font-medium text-white">{idea.metrics.tam}</div>
+                        <div className="text-xs text-white/40 mb-1">SEO Vol.</div>
+                        <div className="text-sm font-medium text-white">{idea.metrics.monthly_searches}</div>
                     </div>
                     <div className="text-right">
-                        <div className="text-xs text-white/40 mb-1">Potentiel CA</div>
-                        <div className="text-sm font-medium text-brand-mint">{idea.metrics.ca_potentiel}</div>
+                        <div className="text-xs text-white/40 mb-1">Dev Time</div>
+                        <div className="text-sm font-medium text-brand-mint">{idea.metrics.dev_time_est}</div>
                     </div>
                 </div>
 

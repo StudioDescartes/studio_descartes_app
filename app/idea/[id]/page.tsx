@@ -1,7 +1,7 @@
 "use client";
 
 import { MOCK_IDEAS } from "@/lib/mockData";
-import { ArrowLeft, CheckCircle, AlertTriangle, TrendingUp, Zap } from "lucide-react";
+import { ArrowLeft, CheckCircle, AlertTriangle, TrendingUp, Zap, Clock, Search, Code, Globe } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScoreMatrix from "@/components/dashboard/ScoreMatrix";
@@ -23,12 +23,11 @@ export default function IdeaDetail() {
     }, [params?.id]);
 
     if (!idea && params?.id) {
-        // Only return notFound if we have an ID but found nothing
         const found = MOCK_IDEAS.find((i) => i.id === params.id);
         if (!found) return notFound();
     }
 
-    // Initial loading state or if id is missing
+    // Initial loading state
     if (!idea) return <main className="min-h-screen p-12 bg-brand-dark text-white">Chargement...</main>;
 
     const handleAnalysisProgress = (currentScore: number) => {
@@ -53,7 +52,23 @@ export default function IdeaDetail() {
             if (original) {
                 original.status = "scored";
                 original.tasks = completedTasks;
-                original.metrics = { ...original.metrics, tam: "15M€", ca_potentiel: "80K€", breakeven: "12m" };
+                // Mock smart updates based on simulated results
+                original.metrics = {
+                    ...original.metrics,
+                    monthly_searches: "3,400/mo",
+                    dev_time_est: "5 jours",
+                    competitor_count: "Faible",
+                    price_point: "29€/mo"
+                };
+                // Add dummy score values if they were 0
+                if (original.score_global > 0) {
+                    original.scores = {
+                        demand_market: 8,
+                        competitor_gap: 7,
+                        nocode_feasibility: 9,
+                        monetization_speed: 8
+                    };
+                }
             }
         }
 
@@ -61,8 +76,19 @@ export default function IdeaDetail() {
             ...prev,
             status: "scored",
             tasks: completedTasks,
-            // Mock updating metrics after analysis
-            metrics: { ...prev.metrics, tam: "15M€", ca_potentiel: "80K€", breakeven: "12m" }
+            metrics: {
+                ...prev.metrics,
+                monthly_searches: "3,400/mo",
+                dev_time_est: "5 jours",
+                competitor_count: "Faible",
+                price_point: "29€/mo"
+            },
+            scores: {
+                demand_market: 8,
+                competitor_gap: 7,
+                nocode_feasibility: 9,
+                monetization_speed: 8
+            }
         }) : undefined);
     };
 
@@ -115,46 +141,53 @@ export default function IdeaDetail() {
                             <div className="glass-card p-8 rounded-2xl">
                                 <h3 className="text-xl font-serif text-white mb-6 flex items-center gap-2">
                                     <Zap size={20} className="text-brand-purple" />
-                                    Résultats de l'Analyse
+                                    Verdict "Flash Validation"
                                 </h3>
 
                                 <div className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="p-4 bg-brand-mint/10 border border-brand-mint/20 rounded-xl">
+                                            <h4 className="text-brand-mint font-bold mb-2 flex items-center gap-2">
+                                                <Search size={16} /> Demande
+                                            </h4>
+                                            <p className="text-white text-lg font-bold">{idea.metrics.monthly_searches}</p>
+                                            <p className="text-brand-mint/60 text-sm">Via Keyword Planner</p>
+                                        </div>
+                                        <div className="p-4 bg-brand-blue/10 border border-brand-blue/20 rounded-xl">
+                                            <h4 className="text-brand-blue font-bold mb-2 flex items-center gap-2">
+                                                <Code size={16} /> Faisabilité
+                                            </h4>
+                                            <p className="text-white text-lg font-bold">{idea.metrics.dev_time_est}</p>
+                                            <p className="text-brand-blue/60 text-sm">Est. Low-Code Stack</p>
+                                        </div>
+                                    </div>
+
                                     <div>
-                                        <h4 className="text-brand-mint font-bold mb-2 flex items-center gap-2">
-                                            <CheckCircle size={16} /> Points Forts Identifiés
+                                        <h4 className="text-white font-bold mb-2 flex items-center gap-2">
+                                            <CheckCircle size={16} className="text-brand-mint" /> Points Forts
                                         </h4>
                                         <ul className="list-disc list-inside text-white/70 space-y-1 ml-2">
-                                            <li>Alignement parfait avec la mission éducative du studio.</li>
-                                            <li>Marché de niche mais profondeur de demande (TAM {idea.metrics.tam}).</li>
+                                            <li>Signal de demande fort sur les communautés visées.</li>
+                                            <li>Concurrents existants sont souvent "bloated" (trop complexes).</li>
                                         </ul>
                                     </div>
 
                                     <div>
-                                        <h4 className="text-brand-coral font-bold mb-2 flex items-center gap-2">
-                                            <AlertTriangle size={16} /> Risques & Vigilance
+                                        <h4 className="text-white font-bold mb-2 flex items-center gap-2">
+                                            <AlertTriangle size={16} className="text-brand-coral" /> Vigilance
                                         </h4>
                                         <ul className="list-disc list-inside text-white/70 space-y-1 ml-2">
-                                            <li>Concurrents directs identifiés : 3 majeurs.</li>
-                                            <li>Cycle de vente B2B potentiellement long (&gt;3 mois).</li>
+                                            <li>Pricing ({idea.metrics.price_point}) nécessite un volume élevé.</li>
                                         </ul>
                                     </div>
 
                                     <div className="pt-4 border-t border-white/5">
                                         <h4 className="text-white font-bold mb-2">Recommandation IA</h4>
                                         <p className="text-white/80">
-                                            <strong className="text-brand-mint">GO (Conditionnel)</strong> - Lancer un MVP sur 3 mois.
+                                            <strong className="text-brand-mint">GO (MVP)</strong> - Lancer une Landing Page de test ce week-end.
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-
-                            {/* Financial Projections */}
-                            <div className="glass-card p-8 rounded-2xl">
-                                <h3 className="text-xl font-serif text-white mb-6 flex items-center gap-2">
-                                    <TrendingUp size={20} className="text-brand-mint" />
-                                    Trajectoire Financière
-                                </h3>
-                                <FinancialChart />
                             </div>
                         </motion.div>
                     )}
@@ -170,23 +203,23 @@ export default function IdeaDetail() {
                         className="glass-card p-8 rounded-2xl text-center relative overflow-hidden"
                     >
                         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-blue via-brand-purple to-brand-mint"></div>
-                        <h3 className="text-white/50 font-bold uppercase tracking-widest text-sm mb-4">Score Global</h3>
+                        <h3 className="text-white/50 font-bold uppercase tracking-widest text-sm mb-4">Score "Indie"</h3>
                         <div className="text-7xl font-serif font-bold text-brand-blue mb-2">
                             {idea.score_global > 0 ? idea.score_global : "?"}
                         </div>
                         <div className="text-brand-blue/60 font-medium mb-6">
-                            {isAnalyzed ? "EXCELLENT POTENTIEL" : "EN ATTENTE"}
+                            {isAnalyzed ? "VALIDÉ MICRO-SAAS" : "EN ATTENTE"}
                         </div>
 
                         {isAnalyzed && (
                             <div className="grid grid-cols-2 gap-4 border-t border-white/5 pt-6 text-left">
                                 <div>
-                                    <div className="text-xs text-white/40">Break-even</div>
-                                    <div className="font-bold text-white">{idea.metrics.breakeven}</div>
+                                    <div className="text-xs text-white/40">Volume SEO</div>
+                                    <div className="font-bold text-white">{idea.metrics.monthly_searches}</div>
                                 </div>
                                 <div>
-                                    <div className="text-xs text-white/40">Investissement</div>
-                                    <div className="font-bold text-white">{idea.metrics.investment}</div>
+                                    <div className="text-xs text-white/40">Dev Time</div>
+                                    <div className="font-bold text-white">{idea.metrics.dev_time_est}</div>
                                 </div>
                             </div>
                         )}
@@ -195,7 +228,7 @@ export default function IdeaDetail() {
                     {/* Radar Chart Card */}
                     {isAnalyzed && (
                         <div className="glass-card p-6 rounded-2xl">
-                            <h3 className="text-white/60 font-medium mb-4 text-sm text-center">Répartition des Scores</h3>
+                            <h3 className="text-white/60 font-medium mb-4 text-sm text-center">Indie Radar</h3>
                             <ScoreMatrix idea={idea} />
                         </div>
                     )}
@@ -203,7 +236,7 @@ export default function IdeaDetail() {
                     {/* Actions */}
                     <div className="glass-card p-6 rounded-2xl space-y-3">
                         <button disabled={!isAnalyzed} className="w-full py-3 bg-brand-blue disabled:opacity-50 hover:bg-brand-blue/90 text-white font-bold rounded-xl transition-all shadow-lg shadow-brand-blue/20">
-                            Générer Pitch Deck
+                            Générer Plan d'Action
                         </button>
                     </div>
 

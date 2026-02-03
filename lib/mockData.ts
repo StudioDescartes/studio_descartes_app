@@ -1,14 +1,21 @@
 export type AnalysisStatus = "pending" | "analyzing" | "scored" | "validated";
 export type TaskStatus = "todo" | "in_progress" | "done";
 
+export interface TaskResult {
+    label: string;
+    value: string | number;
+    highlight?: boolean;
+}
+
 export interface ValidationTask {
     id: string;
     phase: string;
     name: string;
     description: string;
     status: TaskStatus;
-    points: number; // Score contribution
+    points: number;
     estimatedDuration: string;
+    result?: TaskResult; // To store simulated data (e.g. "Vol: 1200/mo")
 }
 
 export interface BusinessIdea {
@@ -17,112 +24,82 @@ export interface BusinessIdea {
     concept: string;
     status: AnalysisStatus;
     score_global: number;
+    // New Indie Metrics
     scores: {
-        potentiel_marche: number;
-        barrieres_entree: number;
-        investissement_initial: number;
-        temps_breakeven: number;
-        scalabilite: number;
-        differenciation: number;
-        complexite_ops: number;
-        alignement_mission: number;
+        demand_market: number;      // SEO + Communities
+        competitor_gap: number;     // Is there space?
+        nocode_feasibility: number; // Can we build it fast?
+        monetization_speed: number; // Time to first $
     };
     metrics: {
-        tam: string; // Total Addressable Market
-        ca_potentiel: string;
-        breakeven: string;
-        investment: string;
+        monthly_searches: string;
+        competitor_count: string;
+        dev_time_est: string;
+        price_point: string;
     };
     tags: string[];
     tasks: ValidationTask[];
 }
 
-const DESCARTES_PROTOCOL: ValidationTask[] = [
-    // PHASE 1: MARKET FIT (30 pts)
+const INDIE_PROTOCOL: ValidationTask[] = [
+    // PHASE 1: DEMAND (40 pts) - The most important for Indie Hackers
     {
         id: "t1",
-        phase: "1. Market Fit",
-        name: "Analyse Volumétrie Recherche (SEO)",
-        description: "Vérification du volume de recherche mensuel sur les mots-clés cibles (Google Trends / Semrush).",
+        phase: "1. Demande & SEO",
+        name: "Volume de Recherche (SEO)",
+        description: "Recherche Google Keyword Planner & Trends.",
         status: "todo",
-        points: 15,
-        estimatedDuration: "2 min (IA)"
+        points: 20,
+        estimatedDuration: "2 min",
+        result: { label: "Volume Mensuel", value: "..." }
     },
     {
         id: "t2",
-        phase: "1. Market Fit",
-        name: "Ciblage Audience & Pain Points",
-        description: "Identification précise des segments clients et validation du problème douloureux à résoudre.",
+        phase: "1. Demande & SEO",
+        name: "Communautés (Reddit/Fb)",
+        description: "Scan des discussions et plaintes récentes.",
         status: "todo",
-        points: 15,
-        estimatedDuration: "3 min (IA)"
+        points: 20,
+        estimatedDuration: "3 min",
+        result: { label: "Discussions actives", value: "..." }
     },
 
-    // PHASE 2: COMPETITION (20 pts)
+    // PHASE 2: COMPETITION GAP (20 pts)
     {
         id: "t3",
-        phase: "2. Analyse Concurrentielle",
-        name: "Benchmark Direct & Indirect",
-        description: "Scraping des 5 principaux concurrents et analyse de leur offre de valeur.",
+        phase: "2. Concurrence",
+        name: "Analyse des gaps",
+        description: "Les concurrents sont-ils trop gros/lents/chers ?",
         status: "todo",
-        points: 10,
-        estimatedDuration: "5 min (IA)"
+        points: 20,
+        estimatedDuration: "5 min",
+        result: { label: "Concurrents directs", value: "..." }
     },
+
+    // PHASE 3: EXECUTION (20 pts)
     {
         id: "t4",
-        phase: "2. Analyse Concurrentielle",
-        name: "Analyse SWOT & Différenciation",
-        description: "Évaluation des forces/faiblesses et définition de l'Unique Value Proposition.",
+        phase: "3. Faisabilité No-Code",
+        name: "Audit Tech Stack",
+        description: "Peut-on le faire avec Bubble/NextJS en < 2 semaines ?",
         status: "todo",
-        points: 10,
-        estimatedDuration: "Instant"
+        points: 20,
+        estimatedDuration: "Instant",
+        result: { label: "Complexité", value: "..." }
     },
 
-    // PHASE 3: FINANCIALS (30 pts)
+    // PHASE 4: MONEY (20 pts)
     {
         id: "t5",
-        phase: "3. Viabilité Financière",
-        name: "Modélisation Unit Economics",
-        description: "Calcul du coût d'acquisition (CAC) et de la valeur vie client (LTV).",
+        phase: "4. Monétisation",
+        name: "Check Pricing Power",
+        description: "Les gens paient-ils déjà pour résoudre ça ?",
         status: "todo",
-        points: 15,
-        estimatedDuration: "Instant"
-    },
-    {
-        id: "t6",
-        phase: "3. Viabilité Financière",
-        name: "Projection Cashflow & Breakeven",
-        description: "Simulation de trésorerie sur 3 ans pour valider la rentabilité.",
-        status: "todo",
-        points: 15,
-        estimatedDuration: "Instant"
-    },
-
-    // PHASE 4: STRATEGIC FIT (20 pts)
-    {
-        id: "t7",
-        phase: "4. Fit Studio Descartes",
-        name: "Alignement Vision Long Terme",
-        description: "Vérification de la cohérence avec l'écosystème Studio Descartes et les cibles actuelles.",
-        status: "todo",
-        points: 10,
-        estimatedDuration: "Manual Review"
-    },
-    {
-        id: "t8",
-        phase: "4. Fit Studio Descartes",
-        name: "Faisabilité Opérationnelle",
-        description: "Validation des ressources humaines et techniques disponibles en interne.",
-        status: "todo",
-        points: 10,
-        estimatedDuration: "Manual Review"
+        points: 20,
+        estimatedDuration: "Instant",
+        result: { label: "Prix Cible", value: "..." }
     }
 ];
-
-// Helper to calculate score based on task completion
-export const calculateScore = (tasks: ValidationTask[]): number => {
-    return tasks.reduce((acc, task) => task.status === 'done' ? acc + task.points : acc, 0);
-};
 
 export const MOCK_IDEAS: BusinessIdea[] = [
     {
@@ -131,166 +108,50 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         concept: "Vidéo IA qui font revivre les grands moments de l'histoire de la philo. Comptes TikTok/Insta automatisés.",
         status: "pending",
         score_global: 0,
-        scores: {
-            potentiel_marche: 0, barrieres_entree: 0, investissement_initial: 0, temps_breakeven: 0,
-            scalabilite: 0, differenciation: 0, complexite_ops: 0, alignement_mission: 0
-        },
-        metrics: { tam: "-", ca_potentiel: "-", breakeven: "-", investment: "-" },
-        tags: ["Media", "IA", "B2C"],
-        tasks: JSON.parse(JSON.stringify(DESCARTES_PROTOCOL)) // Deep copy
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        tags: ["Media", "IA", "Viral"],
+        tasks: JSON.parse(JSON.stringify(INDIE_PROTOCOL))
     },
     {
         id: "2",
-        nom: "Atelier de philosophie",
-        concept: "Ateliers pratiques de philosophie pour entreprises (B2B) et particuliers. Partenariats Funbooker.",
+        nom: "Notion Template Freelance",
+        concept: "Pack Notion ultra-complet pour freelances (Devis, CRM, Finance).",
         status: "scored",
-        score_global: 75,
-        scores: {
-            potentiel_marche: 7.0, barrieres_entree: 8.0, investissement_initial: 9.0, temps_breakeven: 8.0,
-            scalabilite: 4.0, differenciation: 6.5, complexite_ops: 8.0, alignement_mission: 9.5
-        },
-        metrics: { tam: "45M€", ca_potentiel: "120K€/an", breakeven: "3 mois", investment: "2K€" },
-        tags: ["Service", "B2B", "Formation"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.2 ? 'done' : 'todo' })) as ValidationTask[]
+        score_global: 85,
+        scores: { demand_market: 9, competitor_gap: 7, nocode_feasibility: 10, monetization_speed: 9 },
+        metrics: { monthly_searches: "12k/mo", competitor_count: "High", dev_time_est: "3 jours", price_point: "49€" },
+        tags: ["Digital Product", "No-Code", "B2B"],
+        tasks: INDIE_PROTOCOL.map(t => ({
+            ...t,
+            status: 'done',
+            result: t.id === 't1' ? { label: "Volume Mensuel", value: "12,500", highlight: true } :
+                t.id === 't2' ? { label: "Subs Actifs", value: "5 (r/freelance...)", highlight: true } :
+                    t.id === 't3' ? { label: "Concurrents", value: "Saturé mais cher" } :
+                        t.id === 't4' ? { label: "Complexité", value: "Faible (Notion)" } :
+                            { label: "Prix Moyen", value: "45-90€" }
+        }))
     },
     {
         id: "3",
-        nom: "Formation en philosophie",
-        concept: "Formation 'Deviens toi-même'. Visites guidées lieux historiques (Maison d'Auguste Comte, etc).",
+        nom: "SaaS Feedback Widget",
+        concept: "Widget simple pour collecter des feedbacks vidéo sur site web.",
         status: "validated",
-        score_global: 85,
-        scores: {
-            potentiel_marche: 7.5, barrieres_entree: 7.5, investissement_initial: 8.5, temps_breakeven: 7.5,
-            scalabilite: 6.0, differenciation: 7.0, complexite_ops: 7.0, alignement_mission: 9.0
-        },
-        metrics: { tam: "80M€", ca_potentiel: "250K€/an", breakeven: "6 mois", investment: "5K€" },
-        tags: ["Education", "Culture", "Event"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
+        score_global: 72,
+        scores: { demand_market: 8, competitor_gap: 6, nocode_feasibility: 8, monetization_speed: 7 },
+        metrics: { monthly_searches: "5k/mo", competitor_count: "Medium", dev_time_est: "10 jours", price_point: "19€/mo" },
+        tags: ["SaaS", "B2B", "Tool"],
+        tasks: INDIE_PROTOCOL.map(t => ({ ...t, status: 'done' }))
     },
     {
         id: "4",
-        nom: "Philo Box",
-        concept: "Box mensuelle par abonnement contenant livre, guide de lecture, goodies. Modèle récurrent.",
-        status: "scored",
-        score_global: 90,
-        scores: {
-            potentiel_marche: 8.5, barrieres_entree: 7.0, investissement_initial: 6.5, temps_breakeven: 7.0,
-            scalabilite: 9.0, differenciation: 6.0, complexite_ops: 5.5, alignement_mission: 8.0
-        },
-        metrics: { tam: "120M€", ca_potentiel: "450K€/an", breakeven: "9 mois", investment: "15K€" },
-        tags: ["E-commerce", "Abonnement", "Scalable"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
-    },
-    {
-        id: "5",
-        nom: "Club Philo",
-        concept: "Club privé ou associatif pour échanges philosophiques réguliers.",
+        nom: "Job Board Niche AI",
+        concept: "Job board pour les experts en Prompt Engineering uniquement.",
         status: "pending",
         score_global: 0,
-        scores: {
-            potentiel_marche: 0, barrieres_entree: 0, investissement_initial: 0, temps_breakeven: 0,
-            scalabilite: 0, differenciation: 0, complexite_ops: 0, alignement_mission: 0
-        },
-        metrics: { tam: "-", ca_potentiel: "-", breakeven: "-", investment: "-" },
-        tags: ["Communauté", "Event", "B2C"],
-        tasks: JSON.parse(JSON.stringify(DESCARTES_PROTOCOL))
-    },
-    {
-        id: "6",
-        nom: "Collaboration Artistique",
-        concept: "Partenariats avec artistes pour des oeuvres à concepts philosophiques (ex: Allegra).",
-        status: "scored",
-        score_global: 60,
-        scores: {
-            potentiel_marche: 5.0, barrieres_entree: 6.0, investissement_initial: 7.0, temps_breakeven: 5.0,
-            scalabilite: 3.0, differenciation: 9.0, complexite_ops: 4.0, alignement_mission: 8.5
-        },
-        metrics: { tam: "Niche", ca_potentiel: "Variable", breakeven: "Projet", investment: "Low" },
-        tags: ["Art", "Partenariat", "Branding"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.4 ? 'done' : 'todo' })) as ValidationTask[]
-    },
-    {
-        id: "7",
-        nom: "Tourisme Philosophique",
-        concept: "Parcours de 90 min dans Paris. 'Visites philosophiques par les temps qui restent'.",
-        status: "validated",
-        score_global: 68,
-        scores: {
-            potentiel_marche: 6.5, barrieres_entree: 8.0, investissement_initial: 9.0, temps_breakeven: 8.5,
-            scalabilite: 4.0, differenciation: 7.5, complexite_ops: 7.5, alignement_mission: 9.0
-        },
-        metrics: { tam: "Tourisme", ca_potentiel: "60K€/an", breakeven: "immédiat", investment: "0€" },
-        tags: ["Tourisme", "Event", "Culture"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
-    },
-    {
-        id: "8",
-        nom: "Événementiel Philo Expérience",
-        concept: "Expériences immersives basées sur des concepts philosophiques au Palais de Tokyo.",
-        status: "pending",
-        score_global: 0,
-        scores: {
-            potentiel_marche: 0, barrieres_entree: 0, investissement_initial: 0, temps_breakeven: 0,
-            scalabilite: 0, differenciation: 0, complexite_ops: 0, alignement_mission: 0
-        },
-        metrics: { tam: "-", ca_potentiel: "-", breakeven: "-", investment: "-" },
-        tags: ["Event", "Premium", "Expérience"],
-        tasks: JSON.parse(JSON.stringify(DESCARTES_PROTOCOL))
-    },
-    {
-        id: "9",
-        nom: "Call Center Philosophique",
-        concept: "'La philosophie au bout du fil'. Service d'écoute et de conseil philosophique.",
-        status: "scored",
-        score_global: 55,
-        scores: {
-            potentiel_marche: 4.0, barrieres_entree: 9.0, investissement_initial: 9.5, temps_breakeven: 8.0,
-            scalabilite: 5.0, differenciation: 8.0, complexite_ops: 6.0, alignement_mission: 8.0
-        },
-        metrics: { tam: "Faible", ca_potentiel: "40K€/an", breakeven: "1 mois", investment: "1K€" },
-        tags: ["Service", "B2C", "Insolite"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.5 ? 'done' : 'todo' })) as ValidationTask[]
-    },
-    {
-        id: "10",
-        nom: "Livre - Lieux Philo Paris",
-        concept: "Guide de référence croisant lieux et philosophie (Odile Jacob style).",
-        status: "validated",
-        score_global: 65,
-        scores: {
-            potentiel_marche: 5.5, barrieres_entree: 6.0, investissement_initial: 7.0, temps_breakeven: 6.0,
-            scalabilite: 8.0, differenciation: 6.0, complexite_ops: 8.0, alignement_mission: 9.5
-        },
-        metrics: { tam: "Edition", ca_potentiel: "Passive", breakeven: "12 mois", investment: "Temps" },
-        tags: ["Livre", "Produit", "Culture"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
-    },
-    {
-        id: "11",
-        nom: "Dîner Philosophique",
-        concept: "Dîner 50 places, animations, 3 invités, interventions entre les plats.",
-        status: "scored",
-        score_global: 70,
-        scores: {
-            potentiel_marche: 6.0, barrieres_entree: 6.5, investissement_initial: 6.0, temps_breakeven: 7.0,
-            scalabilite: 3.5, differenciation: 7.0, complexite_ops: 4.0, alignement_mission: 8.5
-        },
-        metrics: { tam: "Event", ca_potentiel: "80K€/an", breakeven: "3 events", investment: "5K€" },
-        tags: ["Event", "Food", "Premium"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.3 ? 'done' : 'todo' })) as ValidationTask[]
-    },
-    {
-        id: "12",
-        nom: "Cinéma Philosophique",
-        concept: "Séances dans le quartier latin, intro/débrief philosophique. Target étudiants et seniors.",
-        status: "validated",
-        score_global: 76,
-        scores: {
-            potentiel_marche: 6.5, barrieres_entree: 6.5, investissement_initial: 7.0, temps_breakeven: 7.0,
-            scalabilite: 5.0, differenciation: 7.5, complexite_ops: 5.5, alignement_mission: 9.0
-        },
-        metrics: { tam: "15M€", ca_potentiel: "80K€/an", breakeven: "12 mois", investment: "2K€" },
-        tags: ["Culture", "Partenariat", "Scalable"],
-        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        tags: ["Marketplace", "Niche", "Job"],
+        tasks: JSON.parse(JSON.stringify(INDIE_PROTOCOL))
     }
 ];
