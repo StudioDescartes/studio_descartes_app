@@ -1,4 +1,3 @@
-import { BusinessIdea, ValidationTask } from "./types"; // Assuming types are exported, or I'll redefine them if needed in the same file as before.
 
 export type AnalysisStatus = "pending" | "analyzing" | "scored" | "validated";
 export type TaskStatus = "todo" | "in_progress" | "done";
