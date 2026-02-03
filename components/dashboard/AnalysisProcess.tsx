@@ -89,9 +89,25 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
             const randomVol = Math.floor(Math.random() * 15000) + 500;
 
             const makeSources = (type: string) => [
-                { id: "s1", title: `Rapport Xerfi - Marché ${type}`, type: "pdf" as const },
-                { id: "s2", title: "Google Trends (12 mois)", url: "https://trends.google.com", type: "web" as const },
-                { id: "s3", title: "Analyse Concurrentielle (Agent)", type: "calculation" as const }
+                {
+                    id: "s1",
+                    title: `Rapport Xerfi - Marché ${type}`,
+                    type: "pdf" as const,
+                    extracted_info: "Pg 14: 'Le segment des loisirs culturels affiche une croissance de +4.5% post-JO 2024'."
+                },
+                {
+                    id: "s2",
+                    title: "Google Trends (12 mois)",
+                    url: "https://trends.google.com/trends/explore?geo=FR&q=soirée%20philosophie",
+                    type: "web" as const,
+                    extracted_info: "Pic de recherche annuel identifié : Septembre & Janvier (Rentrée). Volume stable."
+                },
+                {
+                    id: "s3",
+                    title: "Analyse Concurrentielle (Agent)",
+                    type: "calculation" as const,
+                    extracted_info: "Scraping de 15 sites événementiels parisiens : Prix moyen constaté 12€."
+                }
             ];
 
             switch (taskId) {
@@ -106,16 +122,37 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
                     label: "Discussions",
                     value: `${Math.floor(Math.random() * 20)} threads`,
                     highlight: true,
-                    sources: [{ id: "r1", title: "Reddit r/Paris", url: "https://reddit.com/r/france", type: "web" as const }],
+                    sources: [{
+                        id: "r1",
+                        title: "Reddit r/Paris",
+                        url: "https://www.reddit.com/r/paris/search/?q=rencontrer+des+gens&restrict_sr=1",
+                        type: "web" as const,
+                        extracted_info: "Thread top voté (234 upvotes) : 'Je cherche des endroits calmes pour discuter, marre des bars bruyants'."
+                    }],
                     reasoning: "Détection de mots-clés sémantiques 'Où sortir ce soir' et 'Rencontre intellectuelle' sur les 30 derniers jours."
                 };
                 case 't3': return { label: "Score Viral", value: `${Math.floor(Math.random() * 10)}/10`, reasoning: "Analyse de la courbe de partage de concepts similaires sur TikTok." };
                 case 't4': return { label: "Bloat Score", value: "High", reasoning: "Les concurrents (MK2, Gaumont) ont des frais de structure élevés qui ne leur permettent pas cette agilité." };
-                case 't5': return { label: "Complexité", value: "Complexe", reasoning: "Nécessite de bloquer une salle et de gérer la billetterie physique." };
+                case 't5': return {
+                    label: "Complexité",
+                    value: "Complexe",
+                    reasoning: "Nécessite de bloquer une salle et de gérer la billetterie physique.",
+                    sources: [{
+                        id: "log1",
+                        title: "Calculateur Coûts",
+                        type: "calculation" as const,
+                        extracted_info: "Estimation location salle 50p Paris Centre : 400€/soirée min."
+                    }]
+                };
                 case 't6': return {
                     label: "Fit Local",
                     value: "100%",
-                    sources: [{ id: "d1", title: "Base Élèves Sorbonne", type: "pdf" as const }],
+                    sources: [{
+                        id: "d1",
+                        title: "Base Élèves Sorbonne",
+                        type: "pdf" as const,
+                        extracted_info: "45,000 étudiants en Sciences Humaines dans le 5ème arrondissement (Cible primaire)."
+                    }],
                     reasoning: "Correspondance parfaite avec la démographie du Quartier Latin (étudiants + CSP+)."
                 };
                 default: return { label: "Donnée", value: "Validée" };
