@@ -18,12 +18,19 @@ export default function IdeaDetail({ params }: { params: { id: string } }) {
         return notFound();
     }
 
-    const handleAnalysisComplete = () => {
-        // Simulate score update
+    const handleAnalysisProgress = (currentScore: number) => {
+        setIdea(prev => prev ? ({
+            ...prev,
+            score_global: currentScore
+        }) : undefined);
+    };
+
+    const handleAnalysisComplete = (completedTasks: any[]) => {
         setIdea(prev => prev ? ({
             ...prev,
             status: "scored",
-            score_global: prev.score_global > 0 ? prev.score_global : 75,
+            tasks: completedTasks,
+            // Mock updating metrics after analysis
             metrics: { ...prev.metrics, tam: "15M€", ca_potentiel: "80K€", breakeven: "12m" }
         }) : undefined);
     };
@@ -63,6 +70,7 @@ export default function IdeaDetail({ params }: { params: { id: string } }) {
                         tasks={idea.tasks}
                         isCompleted={isAnalyzed}
                         onComplete={handleAnalysisComplete}
+                        onProgress={handleAnalysisProgress}
                     />
 
                     {/* Results (Only show if analyzed) */}

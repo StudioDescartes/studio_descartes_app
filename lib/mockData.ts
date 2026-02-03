@@ -3,11 +3,12 @@ export type TaskStatus = "todo" | "in_progress" | "done";
 
 export interface ValidationTask {
     id: string;
+    phase: string;
     name: string;
     description: string;
     status: TaskStatus;
+    points: number; // Score contribution
     estimatedDuration: string;
-    impact: string; // Which score dimension it affects
 }
 
 export interface BusinessIdea {
@@ -27,49 +28,101 @@ export interface BusinessIdea {
         alignement_mission: number;
     };
     metrics: {
-        tam: string;
+        tam: string; // Total Addressable Market
         ca_potentiel: string;
         breakeven: string;
         investment: string;
     };
     tags: string[];
-    tasks: ValidationTask[]; // New: Actionable tasks
+    tasks: ValidationTask[];
 }
 
-const STANDARD_TASKS: ValidationTask[] = [
+const DESCARTES_PROTOCOL: ValidationTask[] = [
+    // PHASE 1: MARKET FIT (30 pts)
     {
         id: "t1",
-        name: "Étude de Marché (Volume & Tendances)",
-        description: "Analyse des volumes de recherche Google et des discussions sociales pour valider la demande.",
+        phase: "1. Market Fit",
+        name: "Analyse Volumétrie Recherche (SEO)",
+        description: "Vérification du volume de recherche mensuel sur les mots-clés cibles (Google Trends / Semrush).",
         status: "todo",
-        estimatedDuration: "2 min (IA)",
-        impact: "Potentiel Marché"
+        points: 15,
+        estimatedDuration: "2 min (IA)"
     },
     {
         id: "t2",
-        name: "Benchmark Concurrentiel",
-        description: "Identification et scraping des 5 concurrents directs. Comparaison des offres et prix.",
+        phase: "1. Market Fit",
+        name: "Ciblage Audience & Pain Points",
+        description: "Identification précise des segments clients et validation du problème douloureux à résoudre.",
         status: "todo",
-        estimatedDuration: "5 min (IA)",
-        impact: "Barrières & Différenciation"
+        points: 15,
+        estimatedDuration: "3 min (IA)"
     },
+
+    // PHASE 2: COMPETITION (20 pts)
     {
         id: "t3",
-        name: "Modélisation Financière Macro",
-        description: "Estimation du TAM, SAM, SOM et projection du seuil de rentabilité.",
+        phase: "2. Analyse Concurrentielle",
+        name: "Benchmark Direct & Indirect",
+        description: "Scraping des 5 principaux concurrents et analyse de leur offre de valeur.",
         status: "todo",
-        estimatedDuration: "Instant",
-        impact: "Investissement & Break-even"
+        points: 10,
+        estimatedDuration: "5 min (IA)"
     },
     {
         id: "t4",
-        name: "Check Faisabilité Opérationnelle",
-        description: "Vérification des contraintes légales, logistiques et humaines.",
+        phase: "2. Analyse Concurrentielle",
+        name: "Analyse SWOT & Différenciation",
+        description: "Évaluation des forces/faiblesses et définition de l'Unique Value Proposition.",
         status: "todo",
-        estimatedDuration: "3 min (IA)",
-        impact: "Complexité Ops"
+        points: 10,
+        estimatedDuration: "Instant"
+    },
+
+    // PHASE 3: FINANCIALS (30 pts)
+    {
+        id: "t5",
+        phase: "3. Viabilité Financière",
+        name: "Modélisation Unit Economics",
+        description: "Calcul du coût d'acquisition (CAC) et de la valeur vie client (LTV).",
+        status: "todo",
+        points: 15,
+        estimatedDuration: "Instant"
+    },
+    {
+        id: "t6",
+        phase: "3. Viabilité Financière",
+        name: "Projection Cashflow & Breakeven",
+        description: "Simulation de trésorerie sur 3 ans pour valider la rentabilité.",
+        status: "todo",
+        points: 15,
+        estimatedDuration: "Instant"
+    },
+
+    // PHASE 4: STRATEGIC FIT (20 pts)
+    {
+        id: "t7",
+        phase: "4. Fit Studio Descartes",
+        name: "Alignement Vision Long Terme",
+        description: "Vérification de la cohérence avec l'écosystème Studio Descartes et les cibles actuelles.",
+        status: "todo",
+        points: 10,
+        estimatedDuration: "Manual Review"
+    },
+    {
+        id: "t8",
+        phase: "4. Fit Studio Descartes",
+        name: "Faisabilité Opérationnelle",
+        description: "Validation des ressources humaines et techniques disponibles en interne.",
+        status: "todo",
+        points: 10,
+        estimatedDuration: "Manual Review"
     }
 ];
+
+// Helper to calculate score based on task completion
+export const calculateScore = (tasks: ValidationTask[]): number => {
+    return tasks.reduce((acc, task) => task.status === 'done' ? acc + task.points : acc, 0);
+};
 
 export const MOCK_IDEAS: BusinessIdea[] = [
     {
@@ -84,49 +137,49 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "-", ca_potentiel: "-", breakeven: "-", investment: "-" },
         tags: ["Media", "IA", "B2C"],
-        tasks: [...STANDARD_TASKS]
+        tasks: JSON.parse(JSON.stringify(DESCARTES_PROTOCOL)) // Deep copy
     },
     {
         id: "2",
         nom: "Atelier de philosophie",
         concept: "Ateliers pratiques de philosophie pour entreprises (B2B) et particuliers. Partenariats Funbooker.",
         status: "scored",
-        score_global: 72,
+        score_global: 75,
         scores: {
             potentiel_marche: 7.0, barrieres_entree: 8.0, investissement_initial: 9.0, temps_breakeven: 8.0,
             scalabilite: 4.0, differenciation: 6.5, complexite_ops: 8.0, alignement_mission: 9.5
         },
         metrics: { tam: "45M€", ca_potentiel: "120K€/an", breakeven: "3 mois", investment: "2K€" },
         tags: ["Service", "B2B", "Formation"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.2 ? 'done' : 'todo' })) as ValidationTask[]
     },
     {
         id: "3",
         nom: "Formation en philosophie",
         concept: "Formation 'Deviens toi-même'. Visites guidées lieux historiques (Maison d'Auguste Comte, etc).",
         status: "validated",
-        score_global: 78,
+        score_global: 85,
         scores: {
             potentiel_marche: 7.5, barrieres_entree: 7.5, investissement_initial: 8.5, temps_breakeven: 7.5,
             scalabilite: 6.0, differenciation: 7.0, complexite_ops: 7.0, alignement_mission: 9.0
         },
         metrics: { tam: "80M€", ca_potentiel: "250K€/an", breakeven: "6 mois", investment: "5K€" },
         tags: ["Education", "Culture", "Event"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
     },
     {
         id: "4",
         nom: "Philo Box",
         concept: "Box mensuelle par abonnement contenant livre, guide de lecture, goodies. Modèle récurrent.",
         status: "scored",
-        score_global: 84,
+        score_global: 90,
         scores: {
             potentiel_marche: 8.5, barrieres_entree: 7.0, investissement_initial: 6.5, temps_breakeven: 7.0,
             scalabilite: 9.0, differenciation: 6.0, complexite_ops: 5.5, alignement_mission: 8.0
         },
         metrics: { tam: "120M€", ca_potentiel: "450K€/an", breakeven: "9 mois", investment: "15K€" },
         tags: ["E-commerce", "Abonnement", "Scalable"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
     },
     {
         id: "5",
@@ -140,7 +193,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "-", ca_potentiel: "-", breakeven: "-", investment: "-" },
         tags: ["Communauté", "Event", "B2C"],
-        tasks: [...STANDARD_TASKS]
+        tasks: JSON.parse(JSON.stringify(DESCARTES_PROTOCOL))
     },
     {
         id: "6",
@@ -154,7 +207,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "Niche", ca_potentiel: "Variable", breakeven: "Projet", investment: "Low" },
         tags: ["Art", "Partenariat", "Branding"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.4 ? 'done' : 'todo' })) as ValidationTask[]
     },
     {
         id: "7",
@@ -168,7 +221,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "Tourisme", ca_potentiel: "60K€/an", breakeven: "immédiat", investment: "0€" },
         tags: ["Tourisme", "Event", "Culture"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
     },
     {
         id: "8",
@@ -182,7 +235,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "-", ca_potentiel: "-", breakeven: "-", investment: "-" },
         tags: ["Event", "Premium", "Expérience"],
-        tasks: [...STANDARD_TASKS]
+        tasks: JSON.parse(JSON.stringify(DESCARTES_PROTOCOL))
     },
     {
         id: "9",
@@ -196,7 +249,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "Faible", ca_potentiel: "40K€/an", breakeven: "1 mois", investment: "1K€" },
         tags: ["Service", "B2C", "Insolite"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.5 ? 'done' : 'todo' })) as ValidationTask[]
     },
     {
         id: "10",
@@ -210,7 +263,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "Edition", ca_potentiel: "Passive", breakeven: "12 mois", investment: "Temps" },
         tags: ["Livre", "Produit", "Culture"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
     },
     {
         id: "11",
@@ -224,7 +277,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "Event", ca_potentiel: "80K€/an", breakeven: "3 events", investment: "5K€" },
         tags: ["Event", "Food", "Premium"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: Math.random() > 0.3 ? 'done' : 'todo' })) as ValidationTask[]
     },
     {
         id: "12",
@@ -238,6 +291,6 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         },
         metrics: { tam: "15M€", ca_potentiel: "80K€/an", breakeven: "12 mois", investment: "2K€" },
         tags: ["Culture", "Partenariat", "Scalable"],
-        tasks: STANDARD_TASKS.map(t => ({ ...t, status: "done" }))
+        tasks: DESCARTES_PROTOCOL.map(t => ({ ...t, status: 'done' })) as ValidationTask[]
     }
 ];

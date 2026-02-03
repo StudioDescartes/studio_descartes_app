@@ -2,6 +2,7 @@
 
 import { MotionConfig } from "framer-motion";
 import { Activity, Brain, TrendingUp, Zap } from "lucide-react";
+import Link from "next/link";
 import IdeaCard from "@/components/dashboard/IdeaCard";
 import MetricCard from "@/components/dashboard/MetricCard";
 import { MOCK_IDEAS } from "@/lib/mockData";
@@ -11,7 +12,6 @@ export default function Home() {
     <MotionConfig transition={{ duration: 0.5 }}>
       <main className="min-h-screen p-8 md:p-12 relative z-10 max-w-7xl mx-auto">
 
-        {/* Header */}
         <header className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 text-brand-mint mb-2">
@@ -23,12 +23,22 @@ export default function Home() {
             </h1>
           </div>
 
-          <div className="flex gap-4">
-            <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-white/60">
-              v1.0.0 (Alpha)
+          <div className="flex flex-col items-end gap-3">
+            <div className="flex gap-4">
+              <Link href="/methodologie" className="text-sm text-white/60 hover:text-white transition-colors underline decoration-white/30 underline-offset-4">
+                Notre Méthodologie
+              </Link>
+              <Link href="/inputs" className="text-sm text-white/60 hover:text-white transition-colors underline decoration-white/30 underline-offset-4">
+                Données Requises
+              </Link>
             </div>
-            <div className="px-4 py-2 bg-brand-blue text-white rounded-full text-sm font-bold shadow-lg shadow-brand-blue/20 cursor-pointer hover:bg-brand-blue/90 transition-colors">
-              + Nouvelle Idée
+            <div className="flex gap-4">
+              <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-white/60">
+                v1.0.0 (Alpha)
+              </div>
+              <div className="px-4 py-2 bg-brand-blue text-white rounded-full text-sm font-bold shadow-lg shadow-brand-blue/20 cursor-pointer hover:bg-brand-blue/90 transition-colors">
+                + Nouvelle Idée
+              </div>
             </div>
           </div>
         </header>
