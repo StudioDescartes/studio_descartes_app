@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #12192C;
+  --color-foreground: #F0F0F5;
+
+  --color-brand-dark: #12192C;
+  --color-brand-light: #FEBDF4;
+  --color-brand-blue: #6182F4;
+  --color-brand-mint: #A3FCC2;
+  --color-brand-coral: #EE6F54;
+  --color-brand-green: #D9FDAB;
+  --color-brand-purple: #B48EF5;
+
+  --font-serif: var(--font-playfair), serif;
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+/* Custom Utilities - Replaces @apply to avoid v4/postcss issues with complex arbitrary values */
+.glass-card {
+  background-color: rgba(26, 35, 58, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-xl);
+  transition-property: all;
+  transition-duration: 300ms;
+}
+
+.glass-card:hover {
+  border-color: rgba(254, 189, 244, 0.2);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(97, 130, 244, 0.3);
+}
