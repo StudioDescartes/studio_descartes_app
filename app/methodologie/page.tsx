@@ -51,14 +51,14 @@ export default function MethodologyPage() {
         },
         {
             id: "phase4",
-            title: "Phase 4 : Revenus Passifs & Maintenance",
+            title: "Phase 4 : L'ADN Studio Descartes",
             icon: <Rocket className="text-brand-coral" />,
-            description: "Est-ce un business qui tourne tout seul ?",
+            description: "Est-ce aligné avec notre unfair advantage (Paris/Culture/Tech) ?",
             details: [
-                "Maintenance : Faible besoin de support client ou d'ops manuelles.",
-                "Marges : Coûts serveurs/API faibles.",
-                "Scalabilité : Le CA peut-il augmenter sans augmenter la charge de travail ?",
-                "Critère : +20 points si haut potentiel passif."
+                "Ancrage Culturel : Le produit a-t-il une 'French Touch' ou une profondeur intellectuelle ? (ex: Philo, Droit).",
+                "Spécificité Locale : On évite le 'Generic English SaaS'. On vise des niches francophones mal servies.",
+                "Zéro Logistique : Pas de stock, pas d'envois postaux. 100% Digital.",
+                "Critère : +20 points si match parfait avec notre expertise."
             ]
         }
     ];
