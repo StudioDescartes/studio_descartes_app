@@ -39,26 +39,26 @@ export default function MethodologyPage() {
         },
         {
             id: "phase3",
-            title: "Phase 3 : Faisabilité No-Code",
+            title: "Phase 3 : Faisabilité Opérationnelle (Event)",
             icon: <Zap className="text-brand-blue" />,
-            description: "Peut-on livrer un MVP en moins de 2 semaines ?",
+            description: "A-t-on les capacités de produire l'événement à Paris ?",
             details: [
-                "Tech Stack : Faisable avec Bubble, Make ou Next.js starter ?",
-                "Complexité : Éviter l'IA lourde ou le Hardware au début.",
-                "Time-to-Market : L'objectif est de tester l'idée ce week-end.",
-                "Critère : +30 points si dev estimé < 5 jours."
+                "Lieux Uniques : Accès à des lieux d'exception (Cinémas, Musées) via notre réseau.",
+                "Logistique : Capacité à gérer un event de 50 personnes sans friction.",
+                "Agilité : Peut-on tester le concept avec une seule date ?",
+                "Critère : +30 points si lieu déjà identifié/sécurisé."
             ]
         },
         {
             id: "phase4",
-            title: "Phase 4 : L'ADN Studio Descartes",
+            title: "Phase 4 : L'ADN Studio (Paris & Culture)",
             icon: <Rocket className="text-brand-coral" />,
-            description: "Est-ce aligné avec notre unfair advantage (Paris/Culture/Tech) ?",
+            description: "Profitons-nous de notre ancrage parisien ?",
             details: [
-                "Ancrage Culturel : Le produit a-t-il une 'French Touch' ou une profondeur intellectuelle ? (ex: Philo, Droit).",
-                "Spécificité Locale : On évite le 'Generic English SaaS'. On vise des niches francophones mal servies.",
-                "Zéro Logistique : Pas de stock, pas d'envois postaux. 100% Digital.",
-                "Critère : +20 points si match parfait avec notre expertise."
+                "Écosystème : Le projet s'appuie-t-il sur les réseaux intellectuels parisiens (Lycées, Universités) ?",
+                "Deep Culture : On vend de la réflexion, pas du divertissement superficiel.",
+                "Expérience Physique : On privilégie la rencontre réelle au 100% digital.",
+                "Critère : +20 points si effet de réseau local fort."
             ]
         }
     ];

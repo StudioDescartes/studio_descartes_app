@@ -38,7 +38,7 @@ export default function IdeaDetail() {
             if (original) original.score_global = currentScore;
         }
 
-        setIdea(prev => prev ? ({
+        setIdea((prev: typeof MOCK_IDEAS[0] | undefined) => prev ? ({
             ...prev,
             score_global: currentScore
         }) : undefined);

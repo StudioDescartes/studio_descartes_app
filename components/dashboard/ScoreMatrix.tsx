@@ -11,8 +11,8 @@ export default function ScoreMatrix({ idea }: ScoreMatrixProps) {
     const data = [
         { subject: 'Demande', A: idea.scores.demand_market, fullMark: 10 },
         { subject: 'Compet. Gap', A: idea.scores.competitor_gap, fullMark: 10 },
-        { subject: 'No-Code', A: idea.scores.nocode_feasibility, fullMark: 10 },
-        { subject: 'DNA Fit', A: idea.scores.monetization_speed, fullMark: 10 },
+        { subject: 'Local/Ops', A: idea.scores.nocode_feasibility, fullMark: 10 },
+        { subject: 'Paris Fit', A: idea.scores.monetization_speed, fullMark: 10 },
     ];
 
     return (
