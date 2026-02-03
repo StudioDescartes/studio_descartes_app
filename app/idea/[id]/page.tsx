@@ -19,6 +19,10 @@ export default function IdeaDetail({ params }: { params: { id: string } }) {
     }
 
     const handleAnalysisProgress = (currentScore: number) => {
+        // Persist to global store for dashboard update
+        if (originalIdea) {
+            originalIdea.score_global = currentScore;
+        }
         setIdea(prev => prev ? ({
             ...prev,
             score_global: currentScore
@@ -26,6 +30,13 @@ export default function IdeaDetail({ params }: { params: { id: string } }) {
     };
 
     const handleAnalysisComplete = (completedTasks: any[]) => {
+        // Persist to global store
+        if (originalIdea) {
+            originalIdea.status = "scored";
+            originalIdea.tasks = completedTasks;
+            originalIdea.metrics = { ...originalIdea.metrics, tam: "15M€", ca_potentiel: "80K€", breakeven: "12m" };
+        }
+
         setIdea(prev => prev ? ({
             ...prev,
             status: "scored",
