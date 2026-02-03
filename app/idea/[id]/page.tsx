@@ -8,21 +8,37 @@ import ScoreMatrix from "@/components/dashboard/ScoreMatrix";
 import FinancialChart from "@/components/dashboard/FinancialChart";
 import AnalysisProcess from "@/components/dashboard/AnalysisProcess";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default function IdeaDetail({ params }: { params: { id: string } }) {
-    const originalIdea = MOCK_IDEAS.find((i) => i.id === params.id);
-    const [idea, setIdea] = useState(originalIdea);
+export default function IdeaDetail() {
+    const params = useParams();
+    const [idea, setIdea] = useState<typeof MOCK_IDEAS[0] | undefined>(undefined);
 
-    if (!idea) {
-        return notFound();
+    useEffect(() => {
+        if (params?.id) {
+            const found = MOCK_IDEAS.find((i) => i.id === params.id);
+            setIdea(found);
+        }
+    }, [params?.id]);
+
+    if (!idea && params?.id) {
+        // Only return notFound if we have an ID but found nothing
+        const found = MOCK_IDEAS.find((i) => i.id === params.id);
+        if (!found) return notFound();
     }
+
+    // Initial loading state or if id is missing
+    if (!idea) return <main className="min-h-screen p-12 bg-brand-dark text-white">Chargement...</main>;
 
     const handleAnalysisProgress = (currentScore: number) => {
         // Persist to global store for dashboard update
-        if (originalIdea) {
-            originalIdea.score_global = currentScore;
+        const currentId = params?.id;
+        if (currentId) {
+            const original = MOCK_IDEAS.find(i => i.id === currentId);
+            if (original) original.score_global = currentScore;
         }
+
         setIdea(prev => prev ? ({
             ...prev,
             score_global: currentScore
@@ -31,10 +47,14 @@ export default function IdeaDetail({ params }: { params: { id: string } }) {
 
     const handleAnalysisComplete = (completedTasks: any[]) => {
         // Persist to global store
-        if (originalIdea) {
-            originalIdea.status = "scored";
-            originalIdea.tasks = completedTasks;
-            originalIdea.metrics = { ...originalIdea.metrics, tam: "15M€", ca_potentiel: "80K€", breakeven: "12m" };
+        const currentId = params?.id;
+        if (currentId) {
+            const original = MOCK_IDEAS.find(i => i.id === currentId);
+            if (original) {
+                original.status = "scored";
+                original.tasks = completedTasks;
+                original.metrics = { ...original.metrics, tam: "15M€", ca_potentiel: "80K€", breakeven: "12m" };
+            }
         }
 
         setIdea(prev => prev ? ({
