@@ -98,9 +98,9 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
                 {
                     id: "s2",
                     title: "Google Trends (12 mois)",
-                    url: "https://trends.google.com/trends/explore?geo=FR&q=soirée%20philosophie",
+                    url: "https://trends.google.com/trends/explore?geo=FR&q=cafe%20philo",
                     type: "web" as const,
-                    extracted_info: "Pic de recherche annuel identifié : Septembre & Janvier (Rentrée). Volume stable."
+                    extracted_info: "Mot-clé 'Café Philo' : Volume constant (~1000/mois). Pic notable en hiver. Indique un intérêt de fond pour la 'Philo Sociale'."
                 },
                 {
                     id: "s3",
@@ -116,7 +116,7 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
                     value: `${randomVol}/mois`,
                     highlight: true,
                     sources: makeSources("Culture/Loisirs"),
-                    reasoning: "Croisement des volumes de recherche 'Sortie Paris' avec le taux de conversion moyen du secteur événementiel (2%)."
+                    reasoning: "Croisement des volumes de recherche 'Café Philo' et 'Conférence Paris' pour estimer le TAM (Total Addressable Market)."
                 };
                 case 't2': return {
                     label: "Discussions",
@@ -125,9 +125,9 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
                     sources: [{
                         id: "r1",
                         title: "Reddit r/Paris",
-                        url: "https://www.reddit.com/r/paris/search/?q=rencontrer+des+gens&restrict_sr=1",
+                        url: "https://www.google.com/search?q=site%3Areddit.com%2Fr%2Fparis+%22rencontrer+des+gens%22+intellectuel",
                         type: "web" as const,
-                        extracted_info: "Thread top voté (234 upvotes) : 'Je cherche des endroits calmes pour discuter, marre des bars bruyants'."
+                        extracted_info: "Agrégation de 5 threads sur 'Se faire des amis intellos à Paris'. Besoin récurrent de lieux 'calmes et stimulants'."
                     }],
                     reasoning: "Détection de mots-clés sémantiques 'Où sortir ce soir' et 'Rencontre intellectuelle' sur les 30 derniers jours."
                 };
