@@ -56,41 +56,41 @@ const INDIE_PROTOCOL: ValidationTask[] = [
     // PHASE 1: DEMAND & DISTRIBUTION
     {
         id: "t1",
-        phase: "1. Demand & Distribution",
-        name: "Search Volume (SEO)",
-        description: "Is people searching for this solution? (Keyword Planner)",
+        phase: "1. Demande & Distribution",
+        name: "Volume de Recherche (SEO)",
+        description: "Y a-t-il une demande active ? (Keyword Planner)",
         status: "todo",
         points: 15,
         estimatedDuration: "2 min",
-        result: { label: "Monthly Vol", value: "..." }
+        result: { label: "Volume Mensuel", value: "..." }
     },
     {
         id: "t2",
-        phase: "1. Demand & Distribution",
-        name: "Community Pulse",
-        description: "Are there active subreddits/FB groups complaining about this?",
+        phase: "1. Demande & Distribution",
+        name: "Signaux Communautaires",
+        description: "Des plaintes ou besoins sur Reddit/Discord ?",
         status: "todo",
         points: 15,
         estimatedDuration: "3 min",
-        result: { label: "Active Threads", value: "..." }
+        result: { label: "Discussions", value: "..." }
     },
     {
         id: "t3",
-        phase: "1. Demand & Distribution",
-        name: "Viral Potential",
-        description: "Can this grow organically on TikTok/Twitter? (Shareable?)",
+        phase: "1. Demande & Distribution",
+        name: "Potentiel Viral",
+        description: "Le concept est-il naturellement partaqeable ? (TikTok/Twitter)",
         status: "todo",
         points: 10,
         estimatedDuration: "Instant",
-        result: { label: "K-Factor Pot.", value: "..." }
+        result: { label: "Score Viral", value: "..." }
     },
 
     // PHASE 2: COMPETITION
     {
         id: "t4",
-        phase: "2. Competition Check",
-        name: "Competitor Bloat",
-        description: "Are competitors too complex/expensive? (The 'Indie Advantage')",
+        phase: "2. Analyse Concurrence",
+        name: "Faille Concurrentielle",
+        description: "Les concurrents sont-ils trop chers ou 'bloated' ?",
         status: "todo",
         points: 20,
         estimatedDuration: "5 min",
@@ -100,25 +100,25 @@ const INDIE_PROTOCOL: ValidationTask[] = [
     // PHASE 3: EXECUTION (Event/Logistics)
     {
         id: "t5",
-        phase: "3. Operational Feasibility",
-        name: "Logistics Check",
-        description: "Can we organize this in Paris easily? (Venues, Partners)",
+        phase: "3. Faisabilité Opérationnelle",
+        name: "Faisabilité Terrain",
+        description: "Logistique simple à Paris (Lieux, Partenaires) ?",
         status: "todo",
         points: 20,
         estimatedDuration: "Instant",
-        result: { label: "Complexity", value: "..." }
+        result: { label: "Complexité", value: "..." }
     },
 
     // PHASE 4: STUDIO DESCARTES DNA (Paris & Culture)
     {
         id: "t6",
-        phase: "4. Studio Fit (Parisian)",
-        name: "Parisian Network Effect",
-        description: "Does it leverage our network in Paris? (Cafés, Lycées, Cinemas)",
+        phase: "4. ADN Studio (Paris)",
+        name: "Ancrage Parisien",
+        description: "Levier sur notre réseau (Quartier Latin, Écoles, Cinémas) ?",
         status: "todo",
         points: 20,
         estimatedDuration: "Instant",
-        result: { label: "Local Fit", value: "..." }
+        result: { label: "Fit Local", value: "..." }
     }
 ];
 

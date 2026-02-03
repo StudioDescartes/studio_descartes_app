@@ -96,7 +96,7 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
 
             switch (taskId) {
                 case 't1': return {
-                    label: "Volume estimé",
+                    label: "Volume Mensuel",
                     value: `${randomVol}/mois`,
                     highlight: true,
                     sources: makeSources("Culture/Loisirs"),
@@ -109,11 +109,11 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
                     sources: [{ id: "r1", title: "Reddit r/Paris", url: "https://reddit.com/r/france", type: "web" as const }],
                     reasoning: "Détection de mots-clés sémantiques 'Où sortir ce soir' et 'Rencontre intellectuelle' sur les 30 derniers jours."
                 };
-                case 't3': return { label: "Viral-Score", value: `${Math.floor(Math.random() * 10)}/10`, reasoning: "Analyse de la courbe de partage de concepts similaires sur TikTok." };
+                case 't3': return { label: "Score Viral", value: `${Math.floor(Math.random() * 10)}/10`, reasoning: "Analyse de la courbe de partage de concepts similaires sur TikTok." };
                 case 't4': return { label: "Bloat Score", value: "High", reasoning: "Les concurrents (MK2, Gaumont) ont des frais de structure élevés qui ne leur permettent pas cette agilité." };
-                case 't5': return { label: "Logistique", value: "Complexe", reasoning: "Nécessite de bloquer une salle et de gérer la billetterie physique." };
+                case 't5': return { label: "Complexité", value: "Complexe", reasoning: "Nécessite de bloquer une salle et de gérer la billetterie physique." };
                 case 't6': return {
-                    label: "Fit Paris",
+                    label: "Fit Local",
                     value: "100%",
                     sources: [{ id: "d1", title: "Base Élèves Sorbonne", type: "pdf" as const }],
                     reasoning: "Correspondance parfaite avec la démographie du Quartier Latin (étudiants + CSP+)."
