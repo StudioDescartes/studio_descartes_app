@@ -144,7 +144,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["Event", "Gastronomie", "Networking"],
         tasks: initTasks()
     },
@@ -155,7 +155,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["E-com", "Sub", "Produit"],
         tasks: initTasks()
     },
@@ -166,7 +166,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["Service", "Phone", "Niche"],
         tasks: initTasks()
     },
@@ -177,7 +177,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["App", "Tourisme", "Audio"],
         tasks: initTasks()
     },
@@ -188,7 +188,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["Media", "Viral", "IA"],
         tasks: initTasks()
     },
@@ -199,7 +199,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["Livre", "Publishing", "Paris"],
         tasks: initTasks()
     }
