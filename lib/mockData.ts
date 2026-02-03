@@ -1,3 +1,5 @@
+import { BusinessIdea, ValidationTask } from "./types"; // Assuming types are exported, or I'll redefine them if needed in the same file as before.
+
 export type AnalysisStatus = "pending" | "analyzing" | "scored" | "validated";
 export type TaskStatus = "todo" | "in_progress" | "done";
 
@@ -15,7 +17,7 @@ export interface ValidationTask {
     status: TaskStatus;
     points: number;
     estimatedDuration: string;
-    result?: TaskResult; // To store simulated data (e.g. "Vol: 1200/mo")
+    result?: TaskResult;
 }
 
 export interface BusinessIdea {
@@ -24,12 +26,11 @@ export interface BusinessIdea {
     concept: string;
     status: AnalysisStatus;
     score_global: number;
-    // New Indie Metrics
     scores: {
-        demand_market: number;      // SEO + Communities
-        competitor_gap: number;     // Is there space?
-        nocode_feasibility: number; // Can we build it fast?
-        monetization_speed: number; // Time to first $
+        demand_market: number;
+        competitor_gap: number;
+        nocode_feasibility: number;
+        monetization_speed: number;
     };
     metrics: {
         monthly_searches: string;
@@ -42,7 +43,7 @@ export interface BusinessIdea {
 }
 
 const INDIE_PROTOCOL: ValidationTask[] = [
-    // PHASE 1: DEMAND & DISTRIBUTION (40 pts)
+    // PHASE 1: DEMAND & DISTRIBUTION
     {
         id: "t1",
         phase: "1. Demand & Distribution",
@@ -74,7 +75,7 @@ const INDIE_PROTOCOL: ValidationTask[] = [
         result: { label: "K-Factor Pot.", value: "..." }
     },
 
-    // PHASE 2: COMPETITION (Use the 'Bloat' factor)
+    // PHASE 2: COMPETITION
     {
         id: "t4",
         phase: "2. Competition Check",
@@ -98,71 +99,107 @@ const INDIE_PROTOCOL: ValidationTask[] = [
         result: { label: "Dev Time", value: "..." }
     },
 
-    // PHASE 4: PASSIVE INCOME POTENTIAL
+    // PHASE 4: STUDIO DESCARTES DNA
     {
         id: "t6",
-        phase: "4. Maintenance",
-        name: "Passive Score",
-        description: "Once built, does it run itself? (Low Support/Ops)",
+        phase: "4. Studio Fit (Descartes)",
+        name: "French/Smart Touch",
+        description: "Is it tailored for the French Market or High-Culture? (No Generic English dropshipping)",
         status: "todo",
         points: 20,
         estimatedDuration: "Instant",
-        result: { label: "Hours/Week", value: "..." }
+        result: { label: "Descartes Score", value: "..." }
     }
 ];
+
+// Helper to init tasks
+const initTasks = () => JSON.parse(JSON.stringify(INDIE_PROTOCOL));
 
 export const MOCK_IDEAS: BusinessIdea[] = [
     {
         id: "1",
-        nom: "Créateur de contenu Philo",
-        concept: "Vidéo IA qui font revivre les grands moments de l'histoire de la philo. Comptes TikTok/Insta automatisés.",
-        status: "pending",
-        score_global: 0,
-        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
-        tags: ["Media", "IA", "Viral"],
-        tasks: JSON.parse(JSON.stringify(INDIE_PROTOCOL))
-    },
-    {
-        id: "2",
-        nom: "Notion Template Freelance",
-        concept: "Pack Notion ultra-complet pour freelances (Devis, CRM, Finance).",
+        nom: "Cinéma Philosophique",
+        concept: "Séances de cinéma (Quartier Latin) avec intro/débrief philosophique par des étudiants. Target: Public sénior + étudiants en heures creuses.",
         status: "scored",
-        score_global: 85,
-        scores: { demand_market: 9, competitor_gap: 7, nocode_feasibility: 10, monetization_speed: 9 },
-        metrics: { monthly_searches: "12k/mo", competitor_count: "High", dev_time_est: "3 jours", price_point: "49€" },
-        tags: ["Digital Product", "No-Code", "B2B"],
+        score_global: 88,
+        scores: { demand_market: 8, competitor_gap: 9, nocode_feasibility: 7, monetization_speed: 9 }, // High DNA Fit
+        metrics: { monthly_searches: "2.5k (Event)", competitor_count: "Faible", dev_time_est: "1 semaine (LP)", price_point: "Billeterie + Comm" },
+        tags: ["Event", "Culture", "Paris"],
         tasks: INDIE_PROTOCOL.map(t => {
             const result =
-                t.id === 't1' ? { label: "Volume Mensuel", value: "12,500", highlight: true } :
-                    t.id === 't2' ? { label: "Subs Actifs", value: "5 (r/freelance...)", highlight: true } :
-                        t.id === 't3' ? { label: "Viralité", value: "Moyenne (SEO led)" } :
-                            t.id === 't4' ? { label: "Bloat Score", value: "High (Logiciels chers)" } :
-                                t.id === 't5' ? { label: "Dev Time", value: "3 jours" } :
-                                    { label: "Passive", value: "100% (Digital DL)" };
+                t.id === 't1' ? { label: "Vol. Sorties", value: "High (Paris)", highlight: true } :
+                    t.id === 't2' ? { label: "Groupes Senior", value: "Actifs (FB)", highlight: true } :
+                        t.id === 't3' ? { label: "Viralité", value: "Bouche à oreille" } :
+                            t.id === 't4' ? { label: "Bloat Score", value: "N/A (Expérience)" } :
+                                t.id === 't5' ? { label: "Dev Time", value: "1 jour (Eventbrite)" } :
+                                    { label: "Fit Descartes", value: "100% (Philo/Paris)" };
             return { ...t, status: 'done', result };
         })
     },
     {
-        id: "3",
-        nom: "SaaS Feedback Widget",
-        concept: "Widget simple pour collecter des feedbacks vidéo sur site web.",
-        status: "validated",
-        score_global: 72,
-        scores: { demand_market: 8, competitor_gap: 6, nocode_feasibility: 8, monetization_speed: 7 },
-        metrics: { monthly_searches: "5k/mo", competitor_count: "Medium", dev_time_est: "10 jours", price_point: "19€/mo" },
-        tags: ["SaaS", "B2B", "Tool"],
-        tasks: INDIE_PROTOCOL.map(t => ({ ...t, status: 'done' }))
-    },
-    {
-        id: "4",
-        nom: "Job Board Niche AI",
-        concept: "Job board pour les experts en Prompt Engineering uniquement.",
+        id: "2",
+        nom: "Dîner Philosophique",
+        concept: "Dîner 50 places avec animations/débats. 3 invités, 1 thème. Format agile (Entrée -> Débat -> Plat).",
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
         metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
-        tags: ["Marketplace", "Niche", "Job"],
-        tasks: JSON.parse(JSON.stringify(INDIE_PROTOCOL))
+        tags: ["Event", "Gastronomie", "Networking"],
+        tasks: initTasks()
+    },
+    {
+        id: "3",
+        nom: "Philo Box",
+        concept: "Box mensuelle de philosophie (Livre + Goodies + Fiches). Abonnement récurrent.",
+        status: "pending",
+        score_global: 0,
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        tags: ["E-com", "Sub", "Produit"],
+        tasks: initTasks()
+    },
+    {
+        id: "4",
+        nom: "Call Center Philo",
+        concept: "La philosophie au bout du fil. Service de consultation/écoute philosophique à la demande.",
+        status: "analyzing",
+        score_global: 0,
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        tags: ["Service", "Phone", "Niche"],
+        tasks: initTasks().map((t, i) => i < 2 ? { ...t, status: 'done' } : t) // Simulating progress
+    },
+    {
+        id: "5",
+        nom: "Tourisme Philosophique",
+        concept: "Parcours audio-guidés dans Paris (Maison de Comte, Sartre, Foucault...). Application ou MP3.",
+        status: "scored",
+        score_global: 92,
+        scores: { demand_market: 7, competitor_gap: 10, nocode_feasibility: 9, monetization_speed: 8 },
+        metrics: { monthly_searches: "15k (Tourisme Paris)", competitor_count: "Nul", dev_time_est: "2 semaines", price_point: "9.99€" },
+        tags: ["App", "Tourisme", "Audio"],
+        tasks: INDIE_PROTOCOL.map(t => ({ ...t, status: 'done' }))
+    },
+    {
+        id: "6",
+        nom: "Créateur Contenu Philo",
+        concept: "Comptes automatisés (TikTok/Insta) sur les 'Clashs de Philosophes'. Monetisation vias sponsors.",
+        status: "pending",
+        score_global: 0,
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        tags: ["Media", "Viral", "IA"],
+        tasks: initTasks()
+    },
+    {
+        id: "7",
+        nom: "Guide 'Lieux de la Philo'",
+        concept: "Livre/Ebook référençant les lieux cultes de la philosophie à Paris. Croisement Guide du Routard x Hegel.",
+        status: "pending",
+        score_global: 0,
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        tags: ["Livre", "Publishing", "Paris"],
+        tasks: initTasks()
     }
 ];
