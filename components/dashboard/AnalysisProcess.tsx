@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ValidationTask } from "@/lib/mockData";
-import { CheckCircle, Circle, Loader2, Play, ChevronDown, Check, FileText, Globe, Cpu } from "lucide-react";
+import { ValidationTask, TaskSource } from "@/lib/mockData";
+import { CheckCircle, Circle, Loader2, Play, ChevronDown, Check, FileText, Globe, Cpu, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface AnalysisProcessProps {
@@ -10,6 +10,58 @@ interface AnalysisProcessProps {
     onComplete: (completedTasks: ValidationTask[]) => void;
     onProgress: (currentScore: number) => void;
     isCompleted: boolean;
+}
+
+function SourceItem({ source }: { source: TaskSource }) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="rounded-lg bg-white/5 border border-white/5 overflow-hidden">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex items-center justify-between p-3 hover:bg-white/5 transition-colors text-left"
+            >
+                <div className="flex items-center gap-3">
+                    {source.type === 'pdf' ? <FileText size={14} className="text-brand-purple" /> : <Globe size={14} className="text-brand-blue" />}
+                    <span className="text-sm font-medium text-white/90">{source.title}</span>
+                </div>
+                <ChevronDown size={14} className={`text-white/30 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0 }}
+                        animate={{ height: "auto" }}
+                        exit={{ height: 0 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="p-3 pt-0 text-xs space-y-3 bg-black/20 border-t border-white/5">
+                            {source.url && (
+                                <a
+                                    href={source.url}
+                                    target="_blank"
+                                    className="flex items-center gap-2 text-brand-blue hover:text-white transition-colors underline decoration-brand-blue/30"
+                                >
+                                    <ExternalLink size={10} />
+                                    {source.url}
+                                </a>
+                            )}
+
+                            {source.extracted_info && (
+                                <div className="space-y-1">
+                                    <span className="text-white/30 uppercase tracking-wider text-[10px] font-bold">Extrait :</span>
+                                    <p className="text-brand-mint/90 italic border-l-2 border-brand-mint/30 pl-2 py-1">
+                                        "{source.extracted_info}"
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
 }
 
 export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompleted }: AnalysisProcessProps) {
@@ -200,16 +252,10 @@ export default function AnalysisProcess({ tasks, onComplete, onProgress, isCompl
                                     <div className="flex gap-3">
                                         <Globe size={14} className="text-brand-blue shrink-0 mt-1" />
                                         <div className="w-full">
-                                            <span className="text-brand-blue font-bold block mb-2">Sources Vérifiées</span>
+                                            <span className="text-brand-blue font-bold block mb-2">Sources & Extraits</span>
                                             <div className="grid grid-cols-1 gap-2">
                                                 {task.result.sources.map(source => (
-                                                    <div key={source.id} className="flex items-center justify-between p-2 rounded bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group/source">
-                                                        <div className="flex items-center gap-2">
-                                                            {source.type === 'pdf' ? <FileText size={12} className="text-white/40" /> : <Globe size={12} className="text-white/40" />}
-                                                            <span className="text-white/80 group-hover/source:text-white transition-colors">{source.title}</span>
-                                                        </div>
-                                                        <span className="text-[10px] text-brand-mint/50 border border-brand-mint/20 px-1.5 py-0.5 rounded">VÉRIFIÉ</span>
-                                                    </div>
+                                                    <SourceItem key={source.id} source={source} />
                                                 ))}
                                             </div>
                                         </div>
