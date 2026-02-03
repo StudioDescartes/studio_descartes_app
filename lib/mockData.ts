@@ -87,28 +87,28 @@ const INDIE_PROTOCOL: ValidationTask[] = [
         result: { label: "Bloat Score", value: "..." }
     },
 
-    // PHASE 3: EXECUTION SPEED
+    // PHASE 3: EXECUTION (Event/Logistics)
     {
         id: "t5",
-        phase: "3. Build Speed",
-        name: "No-Code Stack Check",
-        description: "Can it be built in <2 weeks with Bubble/Make/NextJS?",
+        phase: "3. Operational Feasibility",
+        name: "Logistics Check",
+        description: "Can we organize this in Paris easily? (Venues, Partners)",
         status: "todo",
         points: 20,
         estimatedDuration: "Instant",
-        result: { label: "Dev Time", value: "..." }
+        result: { label: "Complexity", value: "..." }
     },
 
-    // PHASE 4: STUDIO DESCARTES DNA
+    // PHASE 4: STUDIO DESCARTES DNA (Paris & Culture)
     {
         id: "t6",
-        phase: "4. Studio Fit (Descartes)",
-        name: "French/Smart Touch",
-        description: "Is it tailored for the French Market or High-Culture? (No Generic English dropshipping)",
+        phase: "4. Studio Fit (Parisian)",
+        name: "Parisian Network Effect",
+        description: "Does it leverage our network in Paris? (Cafés, Lycées, Cinemas)",
         status: "todo",
         points: 20,
         estimatedDuration: "Instant",
-        result: { label: "Descartes Score", value: "..." }
+        result: { label: "Local Fit", value: "..." }
     }
 ];
 
@@ -120,21 +120,12 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         id: "1",
         nom: "Cinéma Philosophique",
         concept: "Séances de cinéma (Quartier Latin) avec intro/débrief philosophique par des étudiants. Target: Public sénior + étudiants en heures creuses.",
-        status: "scored",
-        score_global: 88,
-        scores: { demand_market: 8, competitor_gap: 9, nocode_feasibility: 7, monetization_speed: 9 }, // High DNA Fit
-        metrics: { monthly_searches: "2.5k (Event)", competitor_count: "Faible", dev_time_est: "1 semaine (LP)", price_point: "Billeterie + Comm" },
+        status: "pending",
+        score_global: 0,
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
         tags: ["Event", "Culture", "Paris"],
-        tasks: INDIE_PROTOCOL.map(t => {
-            const result =
-                t.id === 't1' ? { label: "Vol. Sorties", value: "High (Paris)", highlight: true } :
-                    t.id === 't2' ? { label: "Groupes Senior", value: "Actifs (FB)", highlight: true } :
-                        t.id === 't3' ? { label: "Viralité", value: "Bouche à oreille" } :
-                            t.id === 't4' ? { label: "Bloat Score", value: "N/A (Expérience)" } :
-                                t.id === 't5' ? { label: "Dev Time", value: "1 jour (Eventbrite)" } :
-                                    { label: "Fit Descartes", value: "100% (Philo/Paris)" };
-            return { ...t, status: 'done', result };
-        })
+        tasks: initTasks()
     },
     {
         id: "2",
@@ -162,23 +153,23 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         id: "4",
         nom: "Call Center Philo",
         concept: "La philosophie au bout du fil. Service de consultation/écoute philosophique à la demande.",
-        status: "analyzing",
+        status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
         metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
         tags: ["Service", "Phone", "Niche"],
-        tasks: initTasks().map((t, i) => i < 2 ? { ...t, status: 'done' } : t) // Simulating progress
+        tasks: initTasks()
     },
     {
         id: "5",
         nom: "Tourisme Philosophique",
         concept: "Parcours audio-guidés dans Paris (Maison de Comte, Sartre, Foucault...). Application ou MP3.",
-        status: "scored",
-        score_global: 92,
-        scores: { demand_market: 7, competitor_gap: 10, nocode_feasibility: 9, monetization_speed: 8 },
-        metrics: { monthly_searches: "15k (Tourisme Paris)", competitor_count: "Nul", dev_time_est: "2 semaines", price_point: "9.99€" },
+        status: "pending",
+        score_global: 0,
+        scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
         tags: ["App", "Tourisme", "Audio"],
-        tasks: INDIE_PROTOCOL.map(t => ({ ...t, status: 'done' }))
+        tasks: initTasks()
     },
     {
         id: "6",
