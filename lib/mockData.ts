@@ -7,6 +7,7 @@ export interface TaskSource {
     title: string;
     url?: string;
     type: "web" | "pdf" | "calculation";
+    extracted_info?: string; // Specific snippet taken from the source
 }
 
 export interface TaskResult {
@@ -44,6 +45,7 @@ export interface BusinessIdea {
         monthly_searches: string;
         competitor_count: string;
         dev_time_est: string;
+        startup_cost: string; // New Indie Metric
         price_point: string;
     };
     tags: string[];
@@ -131,7 +133,7 @@ export const MOCK_IDEAS: BusinessIdea[] = [
         status: "pending",
         score_global: 0,
         scores: { demand_market: 0, competitor_gap: 0, nocode_feasibility: 0, monetization_speed: 0 },
-        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", price_point: "-" },
+        metrics: { monthly_searches: "-", competitor_count: "-", dev_time_est: "-", startup_cost: "-", price_point: "-" },
         tags: ["Event", "Culture", "Paris"],
         tasks: initTasks()
     },
